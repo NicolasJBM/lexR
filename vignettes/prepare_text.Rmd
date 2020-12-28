@@ -1,0 +1,203 @@
+---
+title: "Preparing Textual Data for Analysis"
+author: Nicolas Mangin
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{prepare_text}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+library(lexR)
+library(chartR)
+load("diagram.RData")
+```
+
+
+The first set of functions from the *lexR* package are meant to speed up the text cleaning process by setting specific defaults and applying several distict commands at once. The full work flow is described in the following diagram:  
+
+
+```{r echo=FALSE, fig.height=3, fig.width=6, message=FALSE, warning=FALSE, paged.print=FALSE}
+workflow <- chartR::draw_nomnet(nodes = diagram$nodes, relations = diagram$relations, moderations = diagram$moderations)
+DiagrammeR::render_graph(workflow)
+```
+
+
+*************
+
+## Remove HTML tags
+
+The function *clean_tags()* removes all HTML tags from a string:  
+
+```{r}
+tagged <- "<div class='class'> <p> This is an example of <bold>text with HTML tags</bold> which is therefore <red>difficult to read</red> and full of useless information. </p> </div>"
+
+print(tagged)
+```
+Let's apply the *clean_tags()* function:  
+
+```{r}
+cleaned <- lexR::clean_tags(tagged)
+
+print(cleaned)
+```
+
+
+*************
+
+## Enforce proper spacing
+
+Another frequently occuring issue are improper spacing: spaces before punctuation or none after; dashes separated from the words they connect by spaces; spaces after parentheses or not before, etc. The function *clean_spaces* enforce proper spacing:  
+
+```{r}
+improper_spacing <- "In this text ,there      are severial issues( all of them about spacing ) which require some auto - correction ."
+
+print(improper_spacing)
+```
+
+Let's apply the *clean_tags()* function:  
+
+```{r}
+proper_spacing <- lexR::clean_spaces(improper_spacing)
+
+print(proper_spacing)
+```
+
+
+*************
+
+## Recompose paragraphs
+
+Another frequent issues when texts come from external documents is that paragraphs may be broken. The function *clean_paragraphs()* identifies what might be a broken paragraph (e.g. an sentences does not end with a full stop and there is no line break afterwards):  
+
+```{r}
+broken <- c(
+  "This paragraph has",
+  "several sentences.",
+  "This is",
+  "one.",
+  "And this is another.",
+  "",
+  "The next",
+  "paragraph is different.",
+  "And it should be",
+  "recomposed and kept distinct",
+  "from the previous paragraph.",
+  "",
+  "There were the two first",
+  "paragrahps (deliberate typo)",
+  "of this example."
+)
+
+print(broken)
+```
+
+Let's apply the *clean_paragraphs()* function:  
+
+```{r}
+recomposed <- lexR::clean_paragraphs(texts = broken)
+
+print(recomposed)
+```
+
+Note that contrary to all the other functions presented here, *clean_paragraphs()* takes a character vector and not a single string of characters.  
+
+
+*************
+
+## Extract windows of words
+
+Sometimes, the analyst does not want to analyze complete texts, but the surroundings of a specific term. The function *clean_windows()* extracts and returns windows of n words around a regex pattern:  
+
+```{r}
+merged <- paste(recomposed, collapse = " ")
+windows <- lexR::clean_windows(text = merged, pattern = "paragraph", before = 2, after = 2)
+
+print(windows)
+```
+Note that the number of words before and after can be adjusted separately:  
+
+```{r}
+windows <- lexR::clean_windows(text = merged, pattern = "paragraph", before = 3, after = 1)
+
+print(windows)
+```
+Moreover, a regex pattern can be used to capture slight variations arounf a pattern:  
+
+```{r}
+windows <- lexR::clean_windows(text = merged, pattern = "paragra*", before = 3, after = 1)
+
+print(windows)
+```
+
+*************
+
+## Replace words
+
+The function *clean_replace()* can be used to replace synonyms with a common term, or even to correct frequent mistakes:  
+
+```{r}
+corrections <- tibble::tibble(
+  pattern = "paragrahps",
+  replacement = "paragraphs"
+)
+corrected <- clean_replace(text = merged, replacements = corrections)
+```
+
+As you can see, the typo is not corrected:  
+
+```{r}
+windows <- lexR::clean_windows(text = corrected, pattern = "paragraph", before = 3, after = 1)
+
+print(windows)
+```
+Note that this function requires exact matches: it does not rely on regular expressions.  
+
+
+
+*************
+
+## Enforce ASCII
+
+Sometimes, the text is not encoded in ASCII and special charactes can results in bugs because the encoding is not supported. To mitigate this issue, the function *clean_ascii()* replaces non-ASCII characters by a close equivalent en force the ASCI encoding on the text:  
+
+```{r}
+non_ascii <- "Ils sont arrivés à 12:30 à l'hôpital où leur garçon, Gwenaël, devait être soigné, et ils y patientèrent 2 heures."
+validUTF8(non_ascii)
+```
+
+Let's apply the *clean_tags()* function:  
+
+```{r}
+ascii <- lexR::clean_ascii(non_ascii)
+validUTF8(ascii)
+print(ascii)
+```
+
+
+*************
+
+## Simplify to lowercase letters
+
+Finally, some analyses do not require much information beyond words. The function *clean_letters* removes any punctuation, number, etc. and convert the string to lowecase letters:  
+
+```{r}
+lowercase_letters <- lexR::clean_letters(ascii)
+print(lowercase_letters)
+```
+
+The function *clean_spaces()* can then buse to to remove all unnecessary spaces:  
+
+```{r}
+lowercase_letters <- lexR::clean_spaces(lowercase_letters)
+print(lowercase_letters)
+```

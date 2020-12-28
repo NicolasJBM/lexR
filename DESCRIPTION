@@ -40,3 +40,5 @@ Imports:
   miniUI,
   shinythemes,
   knitr
+Suggests: 
+    rmarkdown
