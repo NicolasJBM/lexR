@@ -24,7 +24,7 @@ clean_ascii <- function(text) {
 
   # Break words into characters and replace
   split <- strsplit(text, split = "")
-  
+
   # Replace each character by its ASCII equivalent
   # then recompose the words
   m <- lapply(split, match, lexR::dat_toascii$mapL)

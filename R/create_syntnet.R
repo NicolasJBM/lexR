@@ -26,10 +26,10 @@
 #' @export
 
 create_syntnet <- function(syntrel,
-                          basis = "lemma",
-                          keep_pos = c("NOUN", "PROPN", "ADJ", "VERB", "ADV"),
-                          multiplex = FALSE,
-                          min_count = 1) {
+                           basis = "lemma",
+                           keep_pos = c("NOUN", "PROPN", "ADJ", "VERB", "ADV"),
+                           multiplex = FALSE,
+                           min_count = 1) {
   stopifnot(
     tibble::is_tibble(syntrel),
     basis %in% c("word", "lemma", "stem"),

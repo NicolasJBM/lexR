@@ -17,22 +17,21 @@
 #' @importFrom purrr map
 #' @export
 
-clean_paragraphs <- function(texts){
-  
+clean_paragraphs <- function(texts) {
   stopifnot(
     is.character(texts),
     length(texts) > 1
   )
-  
+
   # Bind variables for dplyr
   texts2 <- NULL
   endparagraph <- NULL
   paragraph <- NULL
-  
+
   # Concatenate lines which do not end with a full stop with the next ones
   y <- tibble::tibble(texts = texts) %>%
     dplyr::mutate(texts2 = dplyr::lead(texts)) %>%
-    dplyr::mutate(endparagraph = endsWith(texts,".") & texts2 == "") %>%
+    dplyr::mutate(endparagraph = endsWith(texts, ".") & texts2 == "") %>%
     dplyr::mutate(paragraph = cumsum(endparagraph)) %>%
     dplyr::select(-texts2, -endparagraph) %>%
     dplyr::mutate(paragraph = dplyr::lag(paragraph)) %>%
@@ -42,6 +41,6 @@ clean_paragraphs <- function(texts){
     dplyr::ungroup() %>%
     dplyr::select(texts) %>%
     dplyr::mutate(texts = purrr::map(texts, trimws))
-  
+
   unlist(y$texts)
 }
