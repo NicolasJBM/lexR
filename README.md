@@ -2,6 +2,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/NicolasJBM/lexR/workflows/R-CMD-check/badge.svg)](https://github.com/NicolasJBM/lexR/actions)
+[![CodeFactor](https://www.codefactor.io/repository/github/nicolasjbm/lexr/badge)](https://www.codefactor.io/repository/github/nicolasjbm/lexr)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![License:
