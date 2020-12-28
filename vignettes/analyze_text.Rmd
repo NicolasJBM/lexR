@@ -1,5 +1,5 @@
 ---
-title: "Analyzing Textual Data"
+title: "analyze_text"
 author: Nicolas Mangin
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
@@ -16,10 +16,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(rmarkdown.html_vignette.check_title = FALSE)
-```
-
-```{r setup}
 library(lexR)
 ```
 

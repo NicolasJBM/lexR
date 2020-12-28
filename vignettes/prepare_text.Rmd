@@ -1,5 +1,5 @@
 ---
-title: "Preparing Textual Data for Analysis"
+title: "prepare_text"
 author: Nicolas Mangin
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
@@ -16,20 +16,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(rmarkdown.html_vignette.check_title = FALSE)
 library(lexR)
-library(chartR)
-load("diagram.RData")
 ```
 
 
-The first set of functions from the *lexR* package are meant to speed up the text cleaning process by setting specific defaults and applying several distict commands at once. The full work flow is described in the following diagram:  
-
-
-```{r echo=FALSE, fig.height=3, fig.width=6, message=FALSE, warning=FALSE, paged.print=FALSE}
-workflow <- chartR::draw_nomnet(nodes = diagram$nodes, relations = diagram$relations, moderations = diagram$moderations)
-DiagrammeR::render_graph(workflow)
-```
+The first set of functions from the *lexR* package are meant to speed up the text cleaning process by setting specific defaults and applying several distict commands at once.  
 
 
 *************
