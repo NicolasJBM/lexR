@@ -37,7 +37,7 @@ devtools::install.github("NicolasJBM/lexR")
 ## Usage
 
 A first set of functions support the preparation of text for subsequent
-analyses. See the vignette “Preparing Textual Data for analysis” for
+analyses. See the vignette “Preparing Textual Data for Analysis” for
 more detail about these functions and the related work flow.
 
 A second set of functions leverages several functions from other
