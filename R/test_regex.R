@@ -7,6 +7,7 @@
 #' @return A new dictionary
 #' @import miniUI
 #' @import shiny
+#' @importFrom shinythemes shinytheme
 #' @importFrom rhandsontable rhandsontable
 #' @importFrom rhandsontable renderRHandsontable
 #' @importFrom rhandsontable hot_to_r
@@ -30,7 +31,7 @@
 
 test_regex <- function(dictionary, texts) {
   ui <- miniPage(
-    theme = paste0(find.package("bibliogR"),"css/boostrap.css"),
+    theme = shinythemes::shinytheme(theme = "flatly"),
 
     gadgetTitleBar("Regular Expressions"),
     miniTabstripPanel(
@@ -62,9 +63,6 @@ test_regex <- function(dictionary, texts) {
 
 
   server <- function(input, output, session) {
-
-    # Bind variables
-
 
     # Create reactive values
     values <- shiny::reactiveValues()

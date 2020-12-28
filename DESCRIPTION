@@ -38,4 +38,5 @@ Imports:
   udpipe,
   shiny,
   miniUI,
+  shinythemes,
   knitr
