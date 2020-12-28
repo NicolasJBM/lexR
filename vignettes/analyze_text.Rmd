@@ -1,0 +1,66 @@
+---
+title: "Analyzing Textual Data"
+author: Nicolas Mangin
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{analyze_text}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+```{r setup}
+library(lexR)
+```
+
+
+
+*************
+
+## Evaluate readability
+
+
+
+
+*************
+
+## Analyze syntactic relationships and a synctatic network
+
+
+
+
+*************
+
+## Create a bag of words and compute related metrics
+
+
+
+
+*************
+
+## Count words from dictionaries
+
+
+
+
+*************
+
+## Create a document to term matrix
+
+
+
+
+*************
+
+## Create, evaluate, and apply a structural topic model
+
