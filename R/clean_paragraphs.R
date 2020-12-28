@@ -21,7 +21,7 @@ clean_paragraphs <- function(texts){
   
   stopifnot(
     is.character(texts),
-    length(texts > 1)
+    length(texts) > 1
   )
   
   # Bind variables for dplyr

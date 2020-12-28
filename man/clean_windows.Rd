@@ -2,19 +2,21 @@
 % Please edit documentation in R/clean_windows.R
 \name{clean_windows}
 \alias{clean_windows}
-\title{Extract windows of words around a focal term.}
+\title{Extract windows of words around a focal pattern.}
 \usage{
-clean_windows(text, term, window = c(3, 3))
+clean_windows(text, pattern, before = 3, after = 3)
 }
 \arguments{
 \item{text}{Character string. String from which the windows should be extracted.}
 
-\item{term}{Character string. Regex pattern around which the adjacent pattern has to be detected within the window.}
+\item{pattern}{Character string. Regex pattern around which the adjacent pattern has to be detected within the window.}
 
-\item{window}{Numeric vector. Two values: one indicating the beginning of the window from the focal pattern, and one indicating the end.}
+\item{before}{Integer. Number of words to extract before the pattern.}
+
+\item{after}{Integer. Number of words to extract after the pattern.}
 }
 \value{
-A list of windows around each occurrences of the focal term.
+A list of windows around each occurrences of the focal pattern.
 }
 \description{
 Extract windows of words around a regex pattern.
