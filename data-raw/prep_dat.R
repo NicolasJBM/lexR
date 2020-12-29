@@ -1,4 +1,4 @@
-dat_en_lemmas <- readxl::read_excel("inst/script/dat_en_lemmas.xlsx")
+dat_en_lemmas <- readxl::read_excel("data-raw/dat_en_lemmas.xlsx")
 
 dat_en_lemmas <- dat_en_lemmas %>%
   dplyr::mutate(
@@ -69,7 +69,7 @@ dat_toascii <- dplyr::mutate(
   mapL = as.character(mapL),
   mapA = as.character(mapA)
 )
-dat_dictionaries <- read.csv("inst/script/dat_dictionaries.csv")
+dat_dictionaries <- read.csv("data-raw/dat_dictionaries.csv")
 save(dat_dictionaries, file = "data/dat_dictionaries.RData")
 
 
