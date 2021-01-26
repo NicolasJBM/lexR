@@ -12,12 +12,14 @@
 
 
 count_words <- function(text = "") {
-  if (text == "") {
-    text <- clipr::read_clip()
-  } else {
-    text <- text
-  }
-  text <- unlist(purrr::map(text, stringr::str_split, pattern = " "))
-  text <- unlist(text[text != ""])
-  length(text)
+  if (!is.null(text) & !is.na(text)){
+    if (text == "") {
+      text <- clipr::read_clip()
+    } else {
+      text <- text
+    }
+    text <- unlist(purrr::map(text, stringr::str_split, pattern = " "))
+    text <- unlist(text[text != ""])
+    length(text)
+  } else 0
 }
